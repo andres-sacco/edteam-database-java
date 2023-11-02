@@ -1,2 +1,3 @@
-# edteam-database-java
-This repository contains the code of the course "Base de datos con Java"
+# Edteam - Curso: Base de datos con Java y Spring Data
+
+Este repositorio contiene todo lo necesario para poder seguir el curso desde el inicio hasta el final.
