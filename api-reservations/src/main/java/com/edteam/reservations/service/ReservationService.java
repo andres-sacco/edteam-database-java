@@ -32,11 +32,11 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.getReservations(criteria), List.class);
+        return conversionService.convert(repository.findAll(), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
-        Optional<Reservation> result = repository.getReservationById(id);
+        Optional<Reservation> result = repository.findById(id);
         if (result.isEmpty()) {
             LOGGER.debug("Not exist reservation with the id {}", id);
             throw new EdteamException(APIError.RESERVATION_NOT_FOUND);
@@ -59,7 +59,7 @@ public class ReservationService {
             throw new EdteamException(APIError.RESERVATION_NOT_FOUND);
         }
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
-        Reservation result = repository.update(id, Objects.requireNonNull(transformed));
+        Reservation result = repository.save(Objects.requireNonNull(transformed));
         return conversionService.convert(result, ReservationDTO.class);
     }
 
@@ -69,6 +69,6 @@ public class ReservationService {
             throw new EdteamException(APIError.RESERVATION_NOT_FOUND);
         }
 
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }
