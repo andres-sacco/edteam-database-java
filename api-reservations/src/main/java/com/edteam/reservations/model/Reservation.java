@@ -1,6 +1,8 @@
 package com.edteam.reservations.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,13 +12,17 @@ import java.util.Objects;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Transient
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "reservation_id")
     private List<Passenger> passengers;
 
-    @Transient
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "itinerary_id")
     private Itinerary itinerary;
 
     @Column(name = "creation_date", nullable = false)

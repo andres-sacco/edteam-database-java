@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Segment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "origin", nullable = false, length = 3)

@@ -1,6 +1,8 @@
 package com.edteam.reservations.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,12 +11,17 @@ import java.util.Objects;
 public class Itinerary {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Transient
+
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "itinerary_id")
     private List<Segment> segment;
 
-    @Transient
+    @OneToOne
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "itinerary_id")
     private Price price;
 
     public List<Segment> getSegment() {

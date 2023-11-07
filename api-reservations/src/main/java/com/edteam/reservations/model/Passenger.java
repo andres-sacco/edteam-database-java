@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Passenger {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;

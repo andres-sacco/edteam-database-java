@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Price {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "total_price", nullable = false)
