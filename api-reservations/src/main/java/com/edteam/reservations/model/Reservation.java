@@ -11,11 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Reservation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Reservation extends Base {
 
     @Valid
     @NotEmpty(message = "You need at least one passenger")
@@ -49,14 +45,6 @@ public class Reservation {
         this.itinerary = itinerary;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -71,18 +59,18 @@ public class Reservation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        return Objects.equals(id, that.id) && Objects.equals(passengers, that.passengers) && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(passengers, that.passengers) && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, passengers, itinerary, creationDate);
+        return Objects.hash(getId(), passengers, itinerary, creationDate);
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", passengers=" + passengers +
                 ", itinerary=" + itinerary +
                 ", creationDate=" + creationDate +

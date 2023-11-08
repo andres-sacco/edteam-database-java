@@ -9,11 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Passenger {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Passenger extends Base {
 
     @Size(min = 1, max = 30)
     @NotBlank(message = "firstName is mandatory")
@@ -75,31 +71,23 @@ public class Passenger {
         this.birthday = birthday;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
-        return Objects.equals(id, passenger.id) && Objects.equals(firstName, passenger.firstName) && Objects.equals(lastName, passenger.lastName) && Objects.equals(documentNumber, passenger.documentNumber) && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
+        return Objects.equals(getId(), passenger.getId()) && Objects.equals(firstName, passenger.firstName) && Objects.equals(lastName, passenger.lastName) && Objects.equals(documentNumber, passenger.documentNumber) && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, documentNumber, documentType, birthday);
+        return Objects.hash(getId(), firstName, lastName, documentNumber, documentType, birthday);
     }
 
     @Override
     public String toString() {
         return "Passenger{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", documentNumber='" + documentNumber + '\'' +

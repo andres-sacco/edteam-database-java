@@ -6,11 +6,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-public class Price {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Price extends Base {
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
@@ -45,31 +41,23 @@ public class Price {
         this.basePrice = basePrice;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Price price = (Price) o;
-        return Objects.equals(id, price.id) && Objects.equals(totalPrice, price.totalPrice) && Objects.equals(totalTax, price.totalTax) && Objects.equals(basePrice, price.basePrice);
+        return Objects.equals(getId(), price.getId()) && Objects.equals(totalPrice, price.totalPrice) && Objects.equals(totalTax, price.totalTax) && Objects.equals(basePrice, price.basePrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalPrice, totalTax, basePrice);
+        return Objects.hash(getId(), totalPrice, totalTax, basePrice);
     }
 
     @Override
     public String toString() {
         return "Price{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", totalPrice=" + totalPrice +
                 ", totalTax=" + totalTax +
                 ", basePrice=" + basePrice +
