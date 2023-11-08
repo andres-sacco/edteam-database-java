@@ -6,6 +6,7 @@ import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.dto.ReservationDTO;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.repository.ReservationRepository;
+import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ReservationService {
@@ -49,8 +51,20 @@ public class ReservationService {
             throw new EdteamException(APIError.RESERVATION_WITH_SAME_ID);
         }
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
+
+        validateEntity(transformed);
+
         Reservation result = repository.save(Objects.requireNonNull(transformed));
         return conversionService.convert(result, ReservationDTO.class);
+    }
+
+    private void validateEntity(Reservation transformed) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Reservation>> violations = validator.validate(transformed);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
     }
 
     public ReservationDTO update(Long id, ReservationDTO reservation) {
@@ -59,6 +73,7 @@ public class ReservationService {
             throw new EdteamException(APIError.RESERVATION_NOT_FOUND);
         }
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
+        validateEntity(transformed);
         Reservation result = repository.save(Objects.requireNonNull(transformed));
         return conversionService.convert(result, ReservationDTO.class);
     }

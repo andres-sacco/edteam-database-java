@@ -1,6 +1,8 @@
 package com.edteam.reservations.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -15,11 +17,14 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Valid
+    @NotEmpty(message = "You need at least one passenger")
     @OneToMany
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private List<Passenger> passengers;
 
+    @Valid
     @ManyToOne
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")

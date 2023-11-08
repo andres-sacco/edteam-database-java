@@ -1,6 +1,9 @@
 package com.edteam.reservations.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,8 +14,14 @@ public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(min = 1, max = 30)
+    @NotBlank(message = "firstName is mandatory")
     @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;
+
+    @Size(min = 1, max = 30)
+    @NotBlank(message = "lastName is mandatory")
     @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
 
@@ -22,6 +31,7 @@ public class Passenger {
     @Column(name = "document_type", nullable = false)
     private String documentType;
 
+    @Past(message = "birthday need to be a date in the past")
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
