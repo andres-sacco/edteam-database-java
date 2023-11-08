@@ -1,5 +1,6 @@
 package com.edteam.reservations.model;
 
+import com.edteam.reservations.listener.ReservationEntityListener;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@EntityListeners(ReservationEntityListener.class)
 public class Reservation extends Base {
 
     @Valid
