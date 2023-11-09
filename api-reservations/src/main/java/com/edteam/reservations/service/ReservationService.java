@@ -6,6 +6,7 @@ import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.dto.ReservationDTO;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.repository.ReservationRepository;
+import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,28 +35,7 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        List<ReservationDTO> reservations = null;
-
-        if(Objects.nonNull(criteria.getReservationDate())
-                && !Objects.nonNull(criteria.getFirstName())
-                && !Objects.nonNull(criteria.getLastName())) {
-            reservations = conversionService.convert(repository.findByCreationDate(criteria.getReservationDate()), List.class);
-
-        } else if(Objects.nonNull(criteria.getReservationDate())
-                && Objects.nonNull(criteria.getFirstName())
-                && !Objects.nonNull(criteria.getLastName())) {
-            reservations = conversionService.convert(repository.findByCreationDateAndPassengersFirstName(criteria.getReservationDate(), criteria.getFirstName()), List.class);
-
-        } else if(Objects.nonNull(criteria.getReservationDate())
-                && Objects.nonNull(criteria.getFirstName())
-                && Objects.nonNull(criteria.getLastName())) {
-            reservations = conversionService.convert(repository.findByCreationDateAndPassengersFirstNameAndPassengersLastName(criteria.getReservationDate(), criteria.getFirstName(), criteria.getLastName()), List.class);
-
-        } else {
-            reservations = conversionService.convert(repository.findAll(), List.class);
-        }
-
-        return reservations;
+        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
