@@ -33,3 +33,7 @@ spring:
     url: jdbc:mysql://localhost:3310/flights_reservation
     username: root
     password: muppet
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
