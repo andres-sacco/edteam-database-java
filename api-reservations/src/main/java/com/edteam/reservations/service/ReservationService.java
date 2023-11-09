@@ -34,7 +34,28 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(), List.class);
+        List<ReservationDTO> reservations = null;
+
+        if(Objects.nonNull(criteria.getReservationDate())
+                && !Objects.nonNull(criteria.getFirstName())
+                && !Objects.nonNull(criteria.getLastName())) {
+            reservations = conversionService.convert(repository.findByCreationDate(criteria.getReservationDate()), List.class);
+
+        } else if(Objects.nonNull(criteria.getReservationDate())
+                && Objects.nonNull(criteria.getFirstName())
+                && !Objects.nonNull(criteria.getLastName())) {
+            reservations = conversionService.convert(repository.findByCreationDateAndPassengersFirstName(criteria.getReservationDate(), criteria.getFirstName()), List.class);
+
+        } else if(Objects.nonNull(criteria.getReservationDate())
+                && Objects.nonNull(criteria.getFirstName())
+                && Objects.nonNull(criteria.getLastName())) {
+            reservations = conversionService.convert(repository.findByCreationDateAndPassengersFirstNameAndPassengersLastName(criteria.getReservationDate(), criteria.getFirstName(), criteria.getLastName()), List.class);
+
+        } else {
+            reservations = conversionService.convert(repository.findAll(), List.class);
+        }
+
+        return reservations;
     }
 
     public ReservationDTO getReservationById(Long id) {
