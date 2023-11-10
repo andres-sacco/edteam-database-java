@@ -1,6 +1,8 @@
 package com.edteam.reservations.dao;
 
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
+import com.edteam.reservations.enums.APIError;
+import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.persistence.EntityManager;
@@ -43,21 +45,23 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public Reservation save(Reservation reservation) {
-        entityManager.persist(reservation);
+        if(reservation.getId() != null) {
+            entityManager.merge(reservation);
+        } else {
+            entityManager.persist(reservation);
+        }
+        entityManager.flush();
         return reservation;
     }
 
-    @Override
-    public Reservation update(Reservation reservation) {
-        entityManager.merge(reservation);
-        return reservation;
-    }
 
     @Override
     public void deleteById(Long id) {
         Reservation reservation = entityManager.find(Reservation.class, id);
         if (reservation != null) {
             entityManager.remove(reservation);
+            entityManager.flush();
+            throw new EdteamException(APIError.BAD_FORMAT);
         }
     }
 
