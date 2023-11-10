@@ -1,5 +1,6 @@
 package com.edteam.reservations.service;
 
+import com.edteam.reservations.dao.ReservationDao;
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
 import com.edteam.reservations.enums.APIError;
 import com.edteam.reservations.exception.EdteamException;
@@ -24,18 +25,18 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private ReservationRepository repository;
+    private ReservationDao repository;
 
     private ConversionService conversionService;
 
     @Autowired
-    public ReservationService(ReservationRepository repository, ConversionService conversionService) {
+    public ReservationService(ReservationDao repository, ConversionService conversionService) {
         this.repository = repository;
         this.conversionService = conversionService;
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
+        return conversionService.convert(repository.findAll(criteria), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
