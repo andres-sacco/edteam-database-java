@@ -61,7 +61,6 @@ public class ReservationDaoImpl implements ReservationDao {
         if (reservation != null) {
             entityManager.remove(reservation);
             entityManager.flush();
-            throw new EdteamException(APIError.BAD_FORMAT);
         }
     }
 
