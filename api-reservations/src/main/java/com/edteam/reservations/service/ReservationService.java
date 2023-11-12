@@ -6,8 +6,6 @@ import com.edteam.reservations.enums.APIError;
 import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.dto.ReservationDTO;
 import com.edteam.reservations.model.Reservation;
-import com.edteam.reservations.repository.ReservationRepository;
-import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
