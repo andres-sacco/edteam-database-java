@@ -1,8 +1,6 @@
 package com.edteam.reservations.dao;
 
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
-import com.edteam.reservations.enums.APIError;
-import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.persistence.EntityManager;
