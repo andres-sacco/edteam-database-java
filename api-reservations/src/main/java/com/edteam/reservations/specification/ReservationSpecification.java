@@ -19,7 +19,8 @@ public class ReservationSpecification {
             }
 
             if (criteria.getFirstName() != null) {
-                predicates.add(criteriaBuilder.equal(root.join("passengers").get("firstName"), criteria.getFirstName()));
+                predicates
+                        .add(criteriaBuilder.equal(root.join("passengers").get("firstName"), criteria.getFirstName()));
             }
 
             if (criteria.getLastName() != null) {

@@ -36,7 +36,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(new ErrorDTO(APIError.VALIDATION_ERROR.getMessage(), reasons));
     }
 
-
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(ConstraintViolationException ex, WebRequest request) {
         List<String> reasons = new ArrayList<>();
@@ -46,8 +45,5 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(APIError.VALIDATION_ERROR.getHttpStatus())
                 .body(new ErrorDTO(APIError.VALIDATION_ERROR.getMessage(), reasons));
     }
-
-
-
 
 }

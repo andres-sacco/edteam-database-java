@@ -7,6 +7,8 @@ public class ReservationDTO {
 
     private Long id;
 
+    Long version;
+
     private List<PassengerDTO> passengers;
 
     private ItineraryDTO itinerary;
@@ -43,5 +45,13 @@ public class ReservationDTO {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

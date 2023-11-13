@@ -6,12 +6,14 @@ import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -36,15 +38,20 @@ public class ReservationDaoImpl implements ReservationDao {
         CriteriaQuery<Reservation> query = criteriaBuilder.createQuery(Reservation.class);
         Root<Reservation> root = query.from(Reservation.class);
 
-        Predicate predicate = ReservationSpecification.withSearchCriteria(criteria).toPredicate(root, query, criteriaBuilder);
+        Predicate predicate = ReservationSpecification.withSearchCriteria(criteria).toPredicate(root, query,
+                criteriaBuilder);
         query.where(predicate);
 
         return entityManager.createQuery(query).getResultList();
     }
 
     @Override
+    // Uncomment when you want to check what happens with this approach
+    // @Lock(LockModeType.PESSIMISTIC_READ)
     public Optional<Reservation> findById(Long id) {
         Reservation reservation = entityManager.find(Reservation.class, id);
+        // Uncomment when you want to check what happens with this approach
+        // Reservation reservation = entityManager.find(Reservation.class, id, LockModeType.PESSIMISTIC_READ);
         return Optional.ofNullable(reservation);
     }
 
@@ -52,14 +59,14 @@ public class ReservationDaoImpl implements ReservationDao {
     public Reservation save(Reservation reservation) {
         transactionTemplate.execute(status -> {
             try {
-                if(reservation.getId() != null) {
+                if (reservation.getId() != null) {
                     entityManager.merge(reservation);
                 } else {
                     entityManager.persist(reservation);
                 }
                 entityManager.flush();
                 // Uncomment the following line to check the rollback
-                //throw new EdteamException(APIError.BAD_FORMAT);
+                // throw new EdteamException(APIError.BAD_FORMAT);
             } catch (Exception e) {
                 status.setRollbackOnly(); // Mark the transaction for rollback
                 throw e; // Re-throw the exception to ensure the rollback occurs
@@ -69,7 +76,6 @@ public class ReservationDaoImpl implements ReservationDao {
 
         return reservation;
     }
-
 
     @Override
     public void deleteById(Long id) {
@@ -83,7 +89,7 @@ public class ReservationDaoImpl implements ReservationDao {
     @Override
     public boolean existsById(Long id) {
         Reservation reservation = entityManager.find(Reservation.class, id);
-        if(Objects.isNull(reservation)) {
+        if (Objects.isNull(reservation)) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;

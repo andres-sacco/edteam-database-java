@@ -6,6 +6,8 @@ public class ItineraryDTO {
 
     private Long id;
 
+    Long version;
+
     private List<SegmentDTO> segment;
 
     private PriceDTO price;
@@ -32,5 +34,13 @@ public class ItineraryDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

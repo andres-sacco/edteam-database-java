@@ -43,10 +43,13 @@ public class Price extends Base {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Price price = (Price) o;
-        return Objects.equals(getId(), price.getId()) && Objects.equals(totalPrice, price.totalPrice) && Objects.equals(totalTax, price.totalTax) && Objects.equals(basePrice, price.basePrice);
+        return Objects.equals(getId(), price.getId()) && Objects.equals(totalPrice, price.totalPrice)
+                && Objects.equals(totalTax, price.totalTax) && Objects.equals(basePrice, price.basePrice);
     }
 
     @Override
@@ -56,11 +59,7 @@ public class Price extends Base {
 
     @Override
     public String toString() {
-        return "Price{" +
-                "id=" + getId() +
-                ", totalPrice=" + totalPrice +
-                ", totalTax=" + totalTax +
-                ", basePrice=" + basePrice +
-                '}';
+        return "Price{" + "id=" + getId() + ", totalPrice=" + totalPrice + ", totalTax=" + totalTax + ", basePrice="
+                + basePrice + '}';
     }
 }

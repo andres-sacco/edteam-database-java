@@ -40,14 +40,15 @@ public class Itinerary extends Base {
         this.price = price;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Itinerary itinerary = (Itinerary) o;
-        return Objects.equals(getId(), itinerary.getId()) && Objects.equals(segment, itinerary.segment) && Objects.equals(price, itinerary.price);
+        return Objects.equals(getId(), itinerary.getId()) && Objects.equals(segment, itinerary.segment)
+                && Objects.equals(price, itinerary.price);
     }
 
     @Override
@@ -57,10 +58,6 @@ public class Itinerary extends Base {
 
     @Override
     public String toString() {
-        return "Itinerary{" +
-                "id=" + getId() +
-                ", segment=" + segment +
-                ", price=" + price +
-                '}';
+        return "Itinerary{" + "id=" + getId() + ", segment=" + segment + ", price=" + price + '}';
     }
 }
