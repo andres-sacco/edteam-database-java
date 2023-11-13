@@ -1,6 +1,8 @@
 package com.edteam.reservations.dao;
 
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
+import com.edteam.reservations.enums.APIError;
+import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.model.Reservation;
 import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.persistence.EntityManager;
@@ -9,8 +11,10 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +26,9 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     @Override
     public List<Reservation> findAll(SearchReservationCriteriaDTO criteria) {
@@ -43,12 +50,23 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public Reservation save(Reservation reservation) {
-        if(reservation.getId() != null) {
-            entityManager.merge(reservation);
-        } else {
-            entityManager.persist(reservation);
-        }
-        entityManager.flush();
+        transactionTemplate.execute(status -> {
+            try {
+                if(reservation.getId() != null) {
+                    entityManager.merge(reservation);
+                } else {
+                    entityManager.persist(reservation);
+                }
+                entityManager.flush();
+                // Uncomment the following line to check the rollback
+                //throw new EdteamException(APIError.BAD_FORMAT);
+            } catch (Exception e) {
+                status.setRollbackOnly(); // Mark the transaction for rollback
+                throw e; // Re-throw the exception to ensure the rollback occurs
+            }
+            return null; // Return value is required for the TransactionTemplate
+        });
+
         return reservation;
     }
 
