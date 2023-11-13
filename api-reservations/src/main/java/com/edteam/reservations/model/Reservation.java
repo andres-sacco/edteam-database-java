@@ -17,13 +17,13 @@ public class Reservation extends Base {
 
     @Valid
     @NotEmpty(message = "You need at least one passenger")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private List<Passenger> passengers;
 
     @Valid
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")
     private Itinerary itinerary;
@@ -73,7 +73,6 @@ public class Reservation extends Base {
 
     @Override
     public String toString() {
-        return "Reservation{" + "id=" + getId() + ", passengers=" + passengers + ", itinerary=" + itinerary
-                + ", creationDate=" + creationDate + '}';
+        return "Reservation{" + "id=" + getId() + ", creationDate=" + creationDate + '}';
     }
 }

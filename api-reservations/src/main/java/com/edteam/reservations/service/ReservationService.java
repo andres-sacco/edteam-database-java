@@ -72,6 +72,8 @@ public class ReservationService {
             LOGGER.debug("Not exist reservation with the id {}", id);
             throw new EdteamException(APIError.RESERVATION_NOT_FOUND);
         }
+        LOGGER.info("Queries executes to obtain the information");
+
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
         validateEntity(transformed);
         Reservation result = repository.save(Objects.requireNonNull(transformed));

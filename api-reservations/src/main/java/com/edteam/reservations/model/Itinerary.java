@@ -14,12 +14,12 @@ public class Itinerary extends Base {
 
     @Valid
     @NotEmpty(message = "You need at least one segment")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")
     private List<Segment> segment;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")
     private Price price;
