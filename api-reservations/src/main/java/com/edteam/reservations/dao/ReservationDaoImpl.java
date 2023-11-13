@@ -47,11 +47,11 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     // Uncomment when you want to check what happens with this approach
-    // @Lock(LockModeType.PESSIMISTIC_READ)
+    //@Lock(LockModeType.PESSIMISTIC_READ)
     public Optional<Reservation> findById(Long id) {
         Reservation reservation = entityManager.find(Reservation.class, id);
         // Uncomment when you want to check what happens with this approach
-        // Reservation reservation = entityManager.find(Reservation.class, id, LockModeType.PESSIMISTIC_READ);
+        //Reservation reservation = entityManager.find(Reservation.class, id, LockModeType.PESSIMISTIC_READ);
         return Optional.ofNullable(reservation);
     }
 
