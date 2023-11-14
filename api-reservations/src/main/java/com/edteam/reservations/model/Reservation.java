@@ -15,6 +15,7 @@ import java.util.Objects;
 @EntityListeners(ReservationEntityListener.class)
 public class Reservation extends Base {
 
+    @OrderBy("lastName ASC")
     @Valid
     @NotEmpty(message = "You need at least one passenger")
     @OneToMany(fetch = FetchType.LAZY)

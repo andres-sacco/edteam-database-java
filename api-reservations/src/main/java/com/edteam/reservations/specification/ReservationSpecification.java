@@ -31,6 +31,15 @@ public class ReservationSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("creationDate"), criteria.getReservationDate()));
             }
 
+            //Order by specification
+            if (criteria.getSortingDirection() != null && criteria.getSortingAttribute() != null) {
+                if(criteria.getSortingDirection().equals("desc")) {
+                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortingAttribute())));
+                } else {
+                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortingAttribute())));
+                }
+            }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

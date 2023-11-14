@@ -1,11 +1,12 @@
 package com.edteam.reservations.service;
 
-import com.edteam.reservations.dao.ReservationDao;
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
 import com.edteam.reservations.enums.APIError;
 import com.edteam.reservations.exception.EdteamException;
 import com.edteam.reservations.dto.ReservationDTO;
 import com.edteam.reservations.model.Reservation;
+import com.edteam.reservations.repository.ReservationRepository;
+import com.edteam.reservations.specification.ReservationSpecification;
 import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,18 +24,19 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private ReservationDao repository;
+    private ReservationRepository repository;
 
     private ConversionService conversionService;
 
     @Autowired
-    public ReservationService(ReservationDao repository, ConversionService conversionService) {
+    public ReservationService(ReservationRepository repository, ConversionService conversionService) {
         this.repository = repository;
         this.conversionService = conversionService;
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(criteria), List.class);
+        //return conversionService.convert(repository.findAllByOrderByCreationDateDesc(), List.class);
+        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
