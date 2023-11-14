@@ -32,11 +32,11 @@ public class ReservationSpecification {
             }
 
             //Order by specification
-            if (criteria.getSortingDirection() != null && criteria.getSortingAttribute() != null) {
+            if (criteria.getSortingDirection() != null && criteria.getSortField() != null) {
                 if(criteria.getSortingDirection().equals("desc")) {
-                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortingAttribute())));
+                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortField())));
                 } else {
-                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortingAttribute())));
+                    query.orderBy(criteriaBuilder.desc(root.get(criteria.getSortField())));
                 }
             }
 

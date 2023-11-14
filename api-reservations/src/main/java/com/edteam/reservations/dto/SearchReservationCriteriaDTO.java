@@ -1,7 +1,5 @@
 package com.edteam.reservations.dto;
 
-import org.springframework.data.domain.Sort;
-
 import java.time.LocalDate;
 
 public class SearchReservationCriteriaDTO {
@@ -9,7 +7,7 @@ public class SearchReservationCriteriaDTO {
     private String firstName;
     private String lastName;
     private LocalDate reservationDate;
-    private String sortingAttribute;
+    private String sortField;
     private String sortingDirection;
 
     public Long getItineraryId() {
@@ -44,12 +42,12 @@ public class SearchReservationCriteriaDTO {
         this.reservationDate = reservationDate;
     }
 
-    public String getSortingAttribute() {
-        return sortingAttribute;
+    public String getSortField() {
+        return sortField;
     }
 
-    public void setSortingAttribute(String sortingAttribute) {
-        this.sortingAttribute = sortingAttribute;
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
     }
 
     public String getSortingDirection() {
