@@ -2,7 +2,7 @@ version: '3.1'
 services:
   api-reservation-db:
     container_name: api-reservation-db
-    image: mysql:8.0
+    image: mysql:8.2.0
     restart: always
     environment:
       MYSQL_DATABASE: 'flights_reservation'
