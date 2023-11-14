@@ -3,6 +3,8 @@ package com.edteam.reservations.specification;
 import com.edteam.reservations.dto.SearchReservationCriteriaDTO;
 import com.edteam.reservations.model.Reservation;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;

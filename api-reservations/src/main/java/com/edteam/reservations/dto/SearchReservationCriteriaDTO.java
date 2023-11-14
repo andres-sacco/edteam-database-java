@@ -9,6 +9,8 @@ public class SearchReservationCriteriaDTO {
     private LocalDate reservationDate;
     private String sortField;
     private String sortingDirection;
+    private Integer pageActual = 0;
+    private Integer pageSize = 10;
 
     public Long getItineraryId() {
         return itineraryId;
@@ -56,5 +58,21 @@ public class SearchReservationCriteriaDTO {
 
     public void setSortingDirection(String sortingDirection) {
         this.sortingDirection = sortingDirection;
+    }
+
+    public Integer getPageActual() {
+        return pageActual;
+    }
+
+    public void setPageActual(Integer pageActual) {
+        this.pageActual = pageActual;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

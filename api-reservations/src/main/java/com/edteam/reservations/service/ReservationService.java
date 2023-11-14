@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +37,9 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
+        Pageable pageable = PageRequest.of(criteria.getPageActual(), criteria.getPageSize());
         //return conversionService.convert(repository.findAllByOrderByCreationDateDesc(), List.class);
-        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
+        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria), pageable), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {

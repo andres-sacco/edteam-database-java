@@ -1,7 +1,7 @@
 package com.edteam.reservations.repository;
 
 import com.edteam.reservations.model.Reservation;
-import jakarta.persistence.OrderBy;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,7 +30,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("lastName") String lastName);
 
     @Transactional(readOnly = true, timeout = 30)
-    List<Reservation> findAll(Specification<Reservation> specification);
+    List<Reservation> findAll(Specification<Reservation> specification, Pageable pageable);
 
     //Order using prefixes
     List<Reservation> findAllByOrderByCreationDateDesc();
